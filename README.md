@@ -1,0 +1,2 @@
+# nym
+Personal nym node
