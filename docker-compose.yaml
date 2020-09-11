@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  nym:
+    image: nym
+    container_name: nym
+    build: .
+    env_file: ./.env.docker
+    command: ["tail", "-f", "/dev/null"]

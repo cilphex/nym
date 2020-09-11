@@ -1,2 +1,3 @@
 # nym
-Personal nym node
+
+Personal nym node. Work in progress.
