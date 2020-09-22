@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-RUN_PARAMS=(
+INIT_PARAMS=(
   "--id=$ID"
   "--gateway=$GATEWAY"
 )
 
 echo "Initializing nym-client"
-exec nym-client init ${RUN_PARAMS[*]}
+exec nym-client init ${INIT_PARAMS[*]}
 
 echo "Starting nym-client"
 exec nym-client run

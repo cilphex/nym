@@ -1,8 +1,10 @@
-FROM rust:1.46-alpine as builder
+FROM rust:1.46-buster as builder
 
-RUN apk add --no-cache --update \
-    alpine-sdk \
-    openssl-dev
+RUN apt-get update
+RUN apt-get install -y \
+    pkg-config \
+    build-essential \
+    libssl-dev
 
 WORKDIR /src
 
@@ -15,10 +17,13 @@ RUN git clone $NYM_REPO . \
     && cargo build --release
 
 # Start a new image
-FROM alpine as final
+FROM rust:1.46-buster
 
-# Add bash
-RUN apk add --no-cache --update \
+RUN apt-get update
+RUN apt-get install -y \
+    pkg-config \
+    build-essential \
+    libssl-dev \
     bash
 
 # Copy the compiled binaries from the builder image.
@@ -32,6 +37,8 @@ COPY --from=builder /src/target/release/sphinx-socks /bin/
 
 # Copy start file
 COPY "start-nym-client.sh" .
+COPY "start-nym-mixnode.sh" .
 
 # And make it executable
 RUN chmod +x start-nym-client.sh
+RUN chmod +x start-nym-mixnode.sh
